@@ -3,3 +3,6 @@ pip install -r requirements.txt
 
 You may need to setup your environment variables for the OpenAI API key and other configurations.
 export OPENAI_API_KEY='your-api-key-here'
+
+Run the application:
+uvicorn main:app --reload
