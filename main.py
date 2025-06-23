@@ -40,7 +40,7 @@ async def chat(websocket: WebSocket):
                 model=aiModel,
                 messages=chat_log,
                 temperature=0.6,
-                max_tokens=250,
+                max_tokens=500,
                 stream=True  
             )
 
@@ -89,3 +89,8 @@ async def chat(request: Request, user_input: Annotated[str, Form()]):
     chat_responses.append(bot_response)
 
     return templates.TemplateResponse("home.html", {request: Request, "chat_responses": chat_responses}) """
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)

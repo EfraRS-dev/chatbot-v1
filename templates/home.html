@@ -48,6 +48,24 @@
   var lastUserMessageDiv = null; // Keep track of the last user message div
   var isNewUserInput = true; // Flag to track when a new user input happens
 
+  // Función para enviar el mensaje
+  function sendMessage() {
+    var message = userInput.value.trim();
+    if (message) {
+      var userInputDiv = document.createElement("div");
+      userInputDiv.className = "chat-message user-input"; // Use user-input class for user messages
+      userInputDiv.textContent = message;
+      chatHistory.appendChild(userInputDiv);
+
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+
+      ws.send(message);
+      userInput.value = "";
+      isNewUserInput = true; // Set the flag as it's a new user input
+      lastUserMessageDiv = null; // Prepare for the next message
+    }
+  }
+
   ws.onmessage = function(event) {
     var message = event.data;
 
@@ -69,20 +87,14 @@
     chatHistory.scrollTop = chatHistory.scrollHeight;
   };
 
-  sendButton.onclick = function() {
-    var message = userInput.value.trim();
-    if (message) {
-      var userInputDiv = document.createElement("div");
-      userInputDiv.className = "chat-message user-input"; // Use user-input class for user messages
-      userInputDiv.textContent = message;
-      chatHistory.appendChild(userInputDiv);
+  // Event listener para el botón "Enviar"
+  sendButton.onclick = sendMessage;
 
-      chatHistory.scrollTop = chatHistory.scrollHeight;
-
-      ws.send(message);
-      userInput.value = "";
-      isNewUserInput = true; // Set the flag as it's a new user input
-      lastUserMessageDiv = null; // Prepare for the next message
+  // Event listener para detectar cuando se presiona Enter en el campo de entrada
+  userInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevenir el comportamiento predeterminado (nueva línea)
+      sendMessage();
     }
-  };
+  });
 </script>
