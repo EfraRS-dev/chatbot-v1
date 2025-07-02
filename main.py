@@ -74,24 +74,6 @@ async def chat(websocket: WebSocket):
             break
 
 
-""" @app.post("/", response_class=HTMLResponse)
-async def chat(request: Request, user_input: Annotated[str, Form()]):
-    
-    chat_log.append({'role': 'user', 'content': user_input})
-    chat_responses.append(user_input)
-
-    response = openai.chat.completions.create(
-        model = 'gpt-3.5-turbo',
-        messages=chat_log,
-        temperature=0.6 # Higher temperature, higher creativity
-    )
-
-    bot_response = response.choices[0].message.content
-    chat_log.append({'role': 'assistant', 'content': bot_response})
-    chat_responses.append(bot_response)
-
-    return templates.TemplateResponse("home.html", {request: Request, "chat_responses": chat_responses}) """
-
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))

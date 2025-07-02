@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
 
-    <h3>
+    <h3 class="text-center mb-4">
         Chatbot de apoyo - ABLE
     </h3>
 
@@ -11,7 +11,7 @@
             <div class="card-header">
                 Historial del chat
             </div>
-            <div class="card-body chat-history" id="chatHistory">
+            <div class="card-body chat-history" id="chatHistory" style="height: 500px; overflow-y: auto; display: flex; flex-direction: column;">
             <!-- Autopopulate -->
             {% for response in chat_responses %}
                 <div class="{{ 'chat-message user-input' if loop.index0 is even else 'chat-message ai-response' }}">
@@ -22,14 +22,61 @@
         </div>
     </div>
 
-    <div class="container" id="footer">
+    <div class="container mt-3" id="footer">
         <div class="input-group mb-3">
             <input class="form-control" placeholder="Añadir entrada aquí" id="userInput"></input>
-            <button class="btn btn-outline-primary" type="button" id="sendButton">Enviar</button>
+            <div class="ms-2"></div><!-- Espaciador -->
+            <button class="btn btn-primary" type="button" id="sendButton">Enviar</button>
         </div>
     </div>
 
 </div>
+
+<style>
+    .chat-message {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    
+    .user-input {
+        align-self: flex-end;
+        background-color: #e9f5ff;
+        text-align: right;
+        margin-left: auto;
+    }
+    
+    .ai-response {
+        align-self: flex-start;
+        background-color: #f0f0f0;
+        text-align: left;
+        margin-right: auto;
+    }
+    
+    #chatHistory {
+        scrollbar-width: thin;
+        scrollbar-color: #999 #f1f1f1;
+    }
+    
+    #chatHistory::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    #chatHistory::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    #chatHistory::-webkit-scrollbar-thumb {
+        background: #999;
+        border-radius: 4px;
+    }
+    
+    #chatHistory::-webkit-scrollbar-thumb:hover {
+        background: #777;
+    }
+</style>
 
 <script>
 
@@ -96,5 +143,10 @@
       event.preventDefault(); // Prevenir el comportamiento predeterminado (nueva línea)
       sendMessage();
     }
+  });
+
+  // Asegurarse de que el scroll funcione correctamente al cargar la página
+  document.addEventListener('DOMContentLoaded', function() {
+    chatHistory.scrollTop = chatHistory.scrollHeight;
   });
 </script>
